@@ -1,0 +1,26 @@
+{
+	"sudokus": {
+		"1": {
+			"level": 1,
+			"initial": {
+				"00": 2,
+				"03": 4
+			},
+			"solved": { }
+		}
+	},
+	"games": {
+		"123": {
+			"sudoku": 1,
+			"teams": {
+				"blue": {
+					"members": {
+						"1": "Noel"
+					},
+					"solved": { }
+				},
+				"red": { }
+			}
+		}
+	}
+}
