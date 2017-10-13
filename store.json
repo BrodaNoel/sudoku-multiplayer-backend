@@ -12,10 +12,17 @@
 	"games": {
 		"123": {
 			"sudoku": 1,
+			"startedAt": 123123123123,
+			"won": "blue",
+			"config": {
+				"checkErrors": true
+			},
 			"teams": {
 				"blue": {
 					"members": {
-						"1": "Noel"
+						"-xbxbxbxbxb": {
+							"ready": true
+						}
 					},
 					"solved": { }
 				},
