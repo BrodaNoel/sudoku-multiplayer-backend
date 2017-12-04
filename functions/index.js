@@ -123,11 +123,7 @@ app.post('/game/get', (req, res) => {
         3: 4,
       };
 
-      game.teams[0].solved = {
-        78: 7,
-        79: 8,
-        80: 9
-      };
+      game.teams[0].solved = game.teams[0].solved || {};
 
       res.send({
         status: 'ok',
@@ -136,6 +132,17 @@ app.post('/game/get', (req, res) => {
         }
       });
     });
+});
+
+app.post('/game/solved/change', (req, res) => {
+  admin.database()
+    .ref('/games/').child(req.body.gameId)
+    .child('/teams/').child(req.body.teamId)
+    .child('/solved/').child(req.body.i).set(req.body.newValue);
+
+  res.send({
+    status: 'ok'
+  });
 });
 
 // app.post('/campaigns/remove', (req, res) => {
