@@ -70,6 +70,8 @@ app.post('/game/create', (req, res) => {
 
   let game = {
     sudoku: 1,
+    level: req.body.game.level,
+    type: req.body.game.type,
     startedAt: Date.now(),
     won: null,
     config: {
@@ -94,6 +96,18 @@ app.post('/game/create', (req, res) => {
     data: {
       game: game
     }
+  });
+});
+
+app.post('/game/player/ready', (req, res) => {
+  admin.database()
+    .ref('/games/').child(req.body.gameId)
+    .child('/teams/').child(req.body.teamId)
+    .child('/players/').child(req.body.playerId)
+    .child('/ready/').set(true);
+
+  res.send({
+    status: 'ok'
   });
 });
 
