@@ -111,6 +111,33 @@ app.post('/game/player/ready', (req, res) => {
   });
 });
 
+app.post('/game/get', (req, res) => {
+  admin.database().ref('/games/').child(req.body.gameId)
+    .once('value').then(value => {
+      let game = value.val();
+
+      game.initial = {
+        0: 1,
+        1: 2,
+        2: 3,
+        3: 4,
+      };
+
+      game.teams[0].solved = {
+        78: 7,
+        79: 8,
+        80: 9
+      };
+
+      res.send({
+        status: 'ok',
+        data: {
+          game: game
+        }
+      });
+    });
+});
+
 // app.post('/campaigns/remove', (req, res) => {
 //   let ref = admin.database().ref(`/customers/${req.user.uid}/campaigns/${req.body.id}`);
 //   ref.remove();
