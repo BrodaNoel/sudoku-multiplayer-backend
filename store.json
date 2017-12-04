@@ -3,8 +3,8 @@
 		"1": {
 			"level": 1,
 			"initial": {
-				"00": 2,
-				"03": 4
+				"0": 2,
+				"3": 4
 			},
 			"solved": { }
 		}
@@ -18,11 +18,11 @@
 			"startedAt": 123123123123,
 			"won": "blue",
 			"config": {
-				"checkErrors": true
+				"showTimer": true
 			},
 			"teams": {
 				"blue": {
-					"members": {
+					"players": {
 						"-xbxbxbxbxb": {
 							"ready": true
 						}

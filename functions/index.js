@@ -62,26 +62,40 @@ app.use(validateFirebaseIdToken);
 //   });
 // });
 
-// app.post('/campaigns/new', (req, res) => {
-//   let newCampaign = {
-//     name: req.body.name,
-//     type: req.body.type,
-//     status: req.body.status
-//   };
-//
-//   let campaignRef = admin.database().ref(`/customers/${req.user.uid}/campaigns`).push();
-//
-//   campaignRef.set(newCampaign);
-//
-//   newCampaign.id = campaignRef.key;
-//
-//   res.send({
-//     status: 'ok',
-//     data: {
-//       campaign: newCampaign
-//     }
-//   });
-// });
+app.post('/game/create', (req, res) => {
+  let players = {};
+  players[req.user.uid] = {
+    ready: false
+  };
+
+  let game = {
+    sudoku: 1,
+    startedAt: Date.now(),
+    won: null,
+    config: {
+      showTimer: !!req.body.game.config.showTimer
+    },
+    teams: {
+      0: {
+        players: players,
+        solved: { }
+      }
+    }
+  };
+
+  let gameRef = admin.database().ref(`/games/`).push();
+
+  gameRef.set(game);
+
+  game.id = gameRef.key;
+
+  res.send({
+    status: 'ok',
+    data: {
+      game: game
+    }
+  });
+});
 
 // app.post('/campaigns/remove', (req, res) => {
 //   let ref = admin.database().ref(`/customers/${req.user.uid}/campaigns/${req.body.id}`);
@@ -97,4 +111,6 @@ exports.userCreated = functions.auth.user().onCreate(event => {
   const data = event.data;
   return admin.database().ref(`/users/${data.uid}`).set(data);
 });
+
+// Export API
 exports.api = functions.https.onRequest(app);
