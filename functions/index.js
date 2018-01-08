@@ -125,6 +125,19 @@ app.post('/game/get', (req, res) => {
 
       game.teams[0].solved = game.teams[0].solved || {};
 
+      // The WTF Firebase behavior
+      if (Array.isArray(game.teams[0].solved)) {
+        let newSolved = {};
+
+        for (var i = 0; i < game.teams[0].solved.length; ++i) {
+          if (game.teams[0].solved[i] > 0) {
+            newSolved[i] = game.teams[0].solved[i]
+          }
+        }
+
+        game.teams[0].solved = newSolved;
+      }
+
       res.send({
         status: 'ok',
         data: {
