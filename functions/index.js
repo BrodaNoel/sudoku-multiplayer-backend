@@ -81,7 +81,7 @@ app.post('/game/create', (req, res) => {
       0: {
         players: players,
         solved: { },
-        isSolved: false
+        solvedAt: null
       }
     }
   };
@@ -160,15 +160,18 @@ app.post('/game/solved/change', (req, res) => {
 });
 
 app.post('/game/isSolved', (req, res) => {
-  var ref = admin.database()
-    .ref('/games/').child(req.body.gameId)
-    .child('/teams/').child(req.body.teamId);
+  const now = Date.now();
 
-  ref.child('/isSolved/').set(true);
-  ref.child('/solvedAt/').set(Date.now());
+  admin.database()
+    .ref('/games/').child(req.body.gameId)
+    .child('/teams/').child(req.body.teamId)
+    .child('/solvedAt/').set(now);
 
   res.send({
-    status: 'ok'
+    status: 'ok',
+    data: {
+      solvedAt: now
+    }
   });
 });
 
